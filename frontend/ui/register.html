@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Đăng ký - Hệ thống dự đoán khả năng hoàn trả khoản vay</title>
+  <link rel="stylesheet" href="{{ url_for('serve_css', filename='register.css') }}">
+  <link rel="stylesheet" href="{{ url_for('serve_css', filename='reset.css') }}">
+  <link rel="stylesheet" href="{{ url_for('serve_css', filename='responsive.css') }}">
+</head>
+<body>
+  <main>
+    <div class="inner-content"> 
+      <!-- <img class="img-auth-container" src="/backend/uploads/bghdbankregister.jpg" alt="Background Image"> -->
+      <div class="auth-container">
+        <h2>Đăng ký tài khoản</h2>
+        <img class="logo" src="{{ url_for('serve_backend_uploads', filename='logohdbank1-fotor-bg-remover-20241130203157.png') }}" alt="HDBank Logo">
+        <form id="register-form" class="auth-form" method="post" action="/register">
+          <input type="text" name="username" placeholder="Username" required>
+          <input type="password" name="password" placeholder="Password" required>
+          <input type="password" name="confirm_password" placeholder="Xác nhận mật khẩu" required>
+          <input type="email" name="gmail" placeholder="Email" required>
+          <input type="text" name="address" placeholder="Địa chỉ" required>
+          <input type="text" name="phonenumber" placeholder="Số điện thoại" required>
+          <button type="submit">Đăng ký</button>
+        </form>
+        <p>Đã có tài khoản? <a href="{{ url_for('login') }}">Đăng nhập ngay</a></p>
+        {% if error %}
+          <p class="error-message">{{ error }}</p>
+        {% endif %}
+      </div>
+    </div>
+  </main>
+  <script src="{{ url_for('serve_js', filename='script.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,274 @@
+/* Reset cơ bản */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f7fc;
+  }
+  
+  /* Container Layout */
+  .container {
+    display: flex;
+    height: 100vh;
+  }
+  
+  /* Sidebar Styles */
+.sidebar {
+    width: 250px;
+    background-color: #2f4f77; /* Màu nền sidebar */
+    padding: 20px;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto; /* Scroll nếu sidebar quá dài */
+  }
+  
+  .sidebar .title-logo {
+    text-align: center;
+    margin-bottom: 30px; /* Khoảng cách dưới logo */
+  }
+  
+  .sidebar .logo {
+    width: 100%;
+    max-width: 150px; /* Giới hạn kích thước logo */
+  }
+  
+  .sidebar .search-bar {
+    margin-top: 20px; /* Khoảng cách trên ô tìm kiếm */
+  }
+  
+  .sidebar .search-bar input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 4px; /* Bo góc ô tìm kiếm */
+    border: none;
+    margin-top: 10px;
+    font-size: 14px;
+  }
+  
+  .sidebar ul {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 30px; /* Khoảng cách trên danh sách */
+  }
+  
+  .sidebar ul li {
+    margin: 15px 0; /* Khoảng cách giữa các mục */
+  }
+  
+  .sidebar ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    display: block;
+    padding: 10px 0; /* Khoảng cách bên trong các mục */
+    transition: color 0.3s ease, background-color 0.3s ease;
+  }
+  
+  .sidebar ul li a:hover {
+    color: #f4f7fc; /* Màu khi hover */
+    background-color: #1e355a; /* Màu nền khi hover */
+    border-radius: 4px; /* Bo góc khi hover */
+  }
+  .sidebar ul li a i {
+    margin-right: 10px;
+    font-size: 18px;
+}
+  /* Main Content Area */
+  .main-content {
+    flex: 1;
+    padding: 30px;
+    background-color: #fff;
+    overflow-y: auto;
+  }
+  
+  .main-content-h2 {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  
+  .main-content-h2 img {
+    width: 150px;
+  }
+  
+  .main-content-h2 h2 {
+    color: #333;
+    font-size: 24px;
+    margin-top: 20px;
+  }
+  
+  /* Statistics Section */
+  .statistics-section {
+    padding: 20px;
+    border-radius: 8px;
+  }
+  
+  .title-form-group {
+    color: #2f4f77;
+    font-size: 22px;
+    text-align: center;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+  }
+  .submit-button{
+    width: 80px;
+    background-color: #1e355a;
+    color: white;
+    border: 1px solid #1e355a;
+    border-radius: 5px;
+  }
+
+  .form-load-filter{
+    margin-bottom: 50px;
+  }
+  
+  /* Card Layout */
+  .card-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  
+  .card {
+    width: 250px;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  
+  .card:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
+  }
+  
+  .card-title {
+    font-size: 18px;
+    color: #2f4f77;
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+  
+  .card-value {
+    font-size: 28px;
+    color: #1e355a;
+    font-weight: bold;
+  }
+  
+  /* Admin Section */
+  .admin-section {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    z-index: 1000;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .admin-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
+    border: 2px solid #2f4f77;
+  }
+  
+  .logout-button {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #2f4f77;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.logout-button i {
+    margin-right: 8px;
+    font-size: 16px;
+}
+  
+  .logout-button:hover {
+    background-color: #1e355a;
+  }
+  .chart-section {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #f4f7fc;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.chart-section canvas {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.image-slider {
+  position: relative;
+  height: 485px;
+  width: 100%;
+
+  margin: 20px auto;
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.slides {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.slide {
+  min-width: 100%;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.slide img {
+  width: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.prev, .next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 18px;
+  border-radius: 5px;
+  z-index: 10;
+}
+
+.prev {
+  left: 10px;
+}
+
+.next {
+  right: 10px;
+}
+
+.prev:hover, .next:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}

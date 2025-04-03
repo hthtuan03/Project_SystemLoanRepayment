@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Prediction HDBank Interface</title>
+    <link rel="stylesheet" href="{{ url_for('serve_css', filename='index.css') }}">
+    <link rel="stylesheet" href="{{ url_for('serve_css', filename='login.css') }}">
+    <link rel="stylesheet" href="{{ url_for('serve_css', filename='reset.css') }}">
+    <link rel="stylesheet" href="{{ url_for('serve_css', filename='responsive.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="title-logo">
+                <img class="logo" src="{{ url_for('serve_backend_uploads', filename='logohdbank1-fotor-bg-remover-20241130203157.png') }}" alt="HDBank Logo">
+                <div class="search-bar">
+                    <input type="text" placeholder="Tìm kiếm..." />
+                </div>
+            </div>
+            <ul>
+                <li><a href="/"><i class="fas fa-home"></i> Trang chủ</a></li>
+                <li><a href="/result-data" id=""><i class="fas fa-history"></i> Lịch sử dự đoán</a></li>
+                <li><a href="/prediction-counts" id=""><i class="fas fa-chart-bar"></i> Thống kê số liệu</a></li>
+                <li><a href="javascript:void(0);" id=""><i class="fas fa-database"></i> Dữ liệu khoản vay</a></li>
+                <li><a href="javascript:void(0);" id=""><i class="fas fa-info-circle"></i> Thông tin quản trị viên</a></li>
+                <li><a href="javascript:void(0);" id=""><i class="fas fa-cog"></i> Cài đặt</a></li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="main-content-h2">
+                <img class="logo" src="{{ url_for('serve_backend_uploads', filename='Logo-HDBank.png') }}" alt="HDBank Logo">
+                <h2>HỆ THỐNG DỰ ĐOÁN KHẢ NĂNG HOÀN TRẢ KHOẢN VAY - HDBANK</h2>
+            </div>
+            <div class="image-slider">
+                <div class="slides">
+                    <div class="slide"><img src="{{ url_for('serve_backend_uploads', filename='slider1.png') }}" alt="Slide 1"></div>
+                    <div class="slide"><img src="{{ url_for('serve_backend_uploads', filename='slider2.png') }}" alt="Slide 2"></div>
+                    <div class="slide"><img src="{{ url_for('serve_backend_uploads', filename='slider3.png') }}" alt="Slide 3"></div>
+                </div>
+                <!-- Nút điều hướng -->
+                <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
+                <button class="next" onclick="moveSlide(1)">&#10095;</button>
+            </div>
+
+            <!-- Form Input -->
+            <form id="loanPredictionForm" method="POST">
+                <!-- Nhóm thông tin người dùng -->
+                <div class="title-infomation">
+                    <h2>NHẬP THÔNG TIN KIỂM TRA TÀI KHOẢN</h2>
+                </div>
+                <h2 class="title-form-group">Thông tin người dùng (User Information)</h2>
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="form-column">
+                            <label for="userName">Tên người dùng (User name)</label>
+                            <input type="text" id="userName" name="UserName" placeholder="Nhập tên người dùng" required>
+                        </div>
+                        <div class="form-column">
+                            <label for="email">Địa chỉ email (Email Address)</label>
+                            <input type="email" id="email" name="Email" placeholder="Nhập địa chỉ gmail" required>
+                        </div>
+                        <div class="form-column">
+                            <label for="phoneNumber">Số điện thoại (Phone Number)</label>
+                            <input type="tel" id="phoneNumber" name="PhoneNumber" placeholder="Nhập số điện thoại" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-column">
+                            <label for="registrationDate">Ngày đăng ký (Date register)</label>
+                            <input type="date" id="registrationDate" name="RegistrationDate" placeholder="Nhập ngày đăng ký" required>
+                        </div>
+                        <div class="form-column">
+                            <label for="accountStatus">Tình trạng tài khoản (Status Acount)</label>
+                            <input type="text" id="accountStatus" name="AccountStatus" placeholder="Nhập tình trạng tài khoản" required>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Nhóm các trường liên quan đến tiền -->
+                <h2 class="title-form-group">Thông tin tài chính</h2>
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="form-column">
+                            <label for="totalDebtToIncomeRatio">Tỷ lệ tổng nợ trên thu nhập (Total Debtto Income Ratio)</label>
+                            <input type="number" id="totalDebtToIncomeRatio" name="TotalDebtToIncomeRatio" placeholder="Nhập tỷ lệ tổng nợ trên thu nhập" step="any" required>
+                        </div>
+                        <div class="form-column">
+                            <label for="debtToIncomeRatio">Tỷ lệ nợ trên thu nhập (Debtto Income Ratio)</label>
+                            <input type="number" id="debtToIncomeRatio" name="DebtToIncomeRatio" placeholder="Nhập tỷ lệ trên thu nhập" step="any" required>
+                        </div>
+                        <div class="form-column">
+                            <label for="netWorth">Giá trị ròng (Net Worth)</label>
+                            <input type="number" id="netWorth" name="NetWorth" placeholder="Nhập giá trị ròng" step="any" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-column">
+                            <label for="monthlyIncome">Thu nhập hàng tháng (Monthly Income)</label>
+                            <input type="number" id="monthlyIncome" name="MonthlyIncome" placeholder="Nhập thu nhập hàng tháng" step="any" required>
+                        </div>
+                        <div class="form-column">
+                            <label for="annualIncome">Thu nhập hàng năm (Annual Income)</label>
+                            <input type="number" id="annualIncome" name="AnnualIncome" placeholder="Nhập thu nhập hàng năm" step="any" required>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Các trường khác -->
+                <h2 class="title-form-group">Thông tin khác</h2>
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="form-column">
+                            <label for="previousLoanDefaults">Vỡ nợ trước đó (Previous LoanDefaults)</label>
+                            <input type="number" id="previousLoanDefaults" name="PreviousLoanDefaults" placeholder="Nhập thông tin vỡ nợ" step="any" required>
+                        </div>
+                        <div class="form-column">
+                            <label for="creditScore">Điểm tín dụng (Credit Score)</label>
+                            <input type="number" id="creditScore" name="CreditScore" placeholder="Nhập điểm tín dụng" required>
+                        </div>
+                        <div class="form-column">
+                            <label for="lengthOfCreditHistory">Độ dài của Lịch sử Tín dụng (Năm) (Length of Credit History)</label>
+                            <input type="number" id="lengthOfCreditHistory" name="LengthOfCreditHistory" placeholder="Nhập lịch sử tín dụng (độ dài)" step="any" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-column">
+                            <label for="bankruptcyHistory">Lịch sử phá sản (Bankruptcy History)</label>
+                            <input type="text" id="bankruptcyHistory" name="BankruptcyHistory" placeholder="Nhập thông tin về lịch sử phá sản" required>
+                        </div>
+                        <div class="form-column">
+                            <label for="interestRate">Lãi suất (%) (Interstate)</label>
+                            <input type="number" id="interestRate" name="InterestRate" placeholder="Nhập % lãi suất" step="0.01" required>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Error or Result Messages -->
+                <div id="result-container">
+                    {% if error %}
+                        <div class="message-box error-message">
+                            <h3>Error</h3>
+                            <p>{{ error }}</p>
+                        </div>
+                    {% elif risk_score is not none and prediction is not none %}
+                        <div class="message-box result-message">
+                            <h3>Prediction Result</h3>
+                            <div class="result-details">
+                                <p><strong>Risk Score:</strong> {{ risk_score }}</p>
+                                <p><strong>Prediction:</strong> {{ prediction }}</p>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            
+                <div class="button-container">
+                    <button type="submit" class="submit-button">Kiểm tra</button>
+                    <button type="reset" class="submit-button">Dọn sạch</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Admin Section -->
+        <!-- Admin Section -->
+        <div class="admin-section">
+            <form class="form-button-logout" action="{{ url_for('logout') }}" method="POST">
+                <button type="submit" class="logout-button share-button"><i class="fas fa-sign-out-alt"></i> Đăng xuất</button>
+            </form>
+            <img src="/backend/uploads/logo-hdbank.jpg" alt="Admin Avatar" class="admin-avatar">
+        </div>
+    </div>
+    <script>
+        let currentSlide = 0;
+    
+        function moveSlide(direction) {
+            const slides = document.querySelector('.slides');
+            const totalSlides = slides.children.length;
+    
+            // Cập nhật vị trí slide hiện tại
+            currentSlide = (currentSlide + direction + totalSlides) % totalSlides;
+    
+            // Di chuyển slider
+            slides.style.transform = `translateX(-${currentSlide * 100}%)`;
+        }
+    
+        // Tự động chuyển slide
+        setInterval(() => {
+            moveSlide(1); // Chuyển đến slide tiếp theo
+        }, 5000); // 5 giây
+    </script>
+    
+    <script src="{{ url_for('serve_js', filename='script.js') }}"></script>
+</body>
+</html>

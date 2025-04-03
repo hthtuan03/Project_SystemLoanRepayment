@@ -1,0 +1,393 @@
+/* Reset some default styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Container */
+.container {
+  display: flex;
+  height: 100vh;
+  background-color: #f4f7fc;
+  font-family: Arial, sans-serif;
+  overflow: hidden; /* Prevent page overflow */
+}
+/*slider*/
+.image-slider {
+  position: relative;
+  height: 485px;
+  width: 100%;
+
+  margin: 20px auto;
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.slides {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.slide {
+  min-width: 100%;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.slide img {
+  width: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.prev, .next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 18px;
+  border-radius: 5px;
+  z-index: 10;
+}
+
+.prev {
+  left: 10px;
+}
+
+.next {
+  right: 10px;
+}
+
+.prev:hover, .next:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* Sidebar Styles */
+.sidebar {
+  width: 250px;
+  background-color: #2f4f77;
+  padding: 20px;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto; /* Ensure sidebar can scroll */
+}
+
+.sidebar .title-logo {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.sidebar .logo {
+  width: 100%;
+  max-width: 150px;
+}
+
+.sidebar .search-bar {
+  margin-top: 20px;
+}
+
+.sidebar .search-bar input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 4px;
+  border: none;
+  margin-top: 10px;
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+  margin-top: 30px;
+}
+
+.sidebar ul li {
+  margin: 15px 0;
+}
+
+.sidebar ul li a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 16px;
+  display: block;
+  padding: 10px 0;
+}
+
+.sidebar ul li a:hover {
+  color: #f4f7fc; /* Màu khi hover */
+  background-color: #1e355a; /* Màu nền khi hover */
+  border-radius: 4px; /* Bo góc khi hover */
+}
+.sidebar ul li a i {
+  margin-right: 10px;
+  font-size: 18px;
+}
+/* Main content area */
+.main-content {
+  flex: 1;
+  padding: 30px;
+  background-color: #fff;
+  overflow-y: auto; /* Allow scrolling for long forms or content */
+  max-height: 100vh; /* Ensure it doesn't overflow */
+}
+
+/* Ensure the scroll bar is styled */
+.main-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.main-content::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+.main-content::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.main-content-h2 {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.main-content-h2 img {
+  width: 150px;
+}
+
+.main-content-h2 h2 {
+  color: #333;
+  font-size: 24px;
+  margin-top: 20px;
+}
+.title-form-group{
+  color: #1e355a;
+  font-weight: bold;
+  font-size: 15px;
+}
+
+.title-infomation{
+  margin-top: 20px;
+  text-align: center;
+  color: #1e355a;
+  font-size: 20px;
+  font-weight: bold;
+}
+/* Form Styles */
+form {
+  display: grid;
+  gap: 20px;
+}
+
+/* Nhóm các trường liên quan đến người dùng */
+.form-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.form-row {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+}
+
+.form-column {
+  flex: 1;
+  min-width: 200px;
+}
+
+.form-column input{
+  margin-top: 10px;
+}
+
+label {
+  font-size: 16px;
+  color: #827d7d;
+  font-style:italic;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="date"],
+input[type="number"] {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+/* Nhóm các trường liên quan đến tiền vào một hàng ngang */
+.horizontal-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.horizontal-group label {
+  flex: 1 1 150px; /* Chiều rộng tối thiểu cho label */
+}
+
+.horizontal-group input {
+  flex: 1 1 200px; /* Các input chiếm không gian còn lại */
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+/* Các trường khác vẫn giữ nguyên dạng dọc */
+.horizontal-group .half-width {
+  flex-basis: 48%; /* Các input chiếm 50% chiều rộng cho các nhóm nhỏ */
+}
+
+/* Buttons */
+.button-container {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+}
+
+.submit-button {
+  padding: 12px 20px;
+  background-color: #2f4f77;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+  background-color: #1e355a;
+}
+
+/* Error and result messages */
+.message-box {
+  padding: 20px;
+  border-radius: 5px;
+  margin-top: 20px;
+}
+
+.error-message {
+  background-color: #ffdddd;
+  color: #a94442;
+  border: 1px solid #f2dede;
+}
+
+.result-message {
+  background-color: #dff0d8;
+  color: #3c763d;
+  border: 1px solid #d6e9c6;
+}
+
+.result-details p {
+  margin: 10px 0;
+}
+
+.result-details strong {
+  color: #333;
+}
+
+/* Admin Section Styles */
+.admin-section {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  z-index: 1000;
+  padding: 10px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.admin-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
+  border: 2px solid #2f4f77;
+}
+
+.logout-button {
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #2f4f77;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.logout-button i {
+  margin-right: 8px;
+  font-size: 16px;
+}
+.logout-button:hover {
+  background-color: #1e355a;
+}
+.form-button-logout {
+  background-color: #2f4f77;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.form-button-logout:hover {
+  background-color: #1e355a;
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 45px;
+  right: 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  width: 180px;
+  z-index: 10;
+}
+
+.dropdown-menu ul {
+  list-style-type: none;
+  padding: 10px 0;
+  margin: 0;
+}
+
+.dropdown-menu ul a {
+  color: #333;
+  text-decoration: none;
+  padding: 10px 20px;
+  display: block;
+  font-size: 14px;
+}
+
+.dropdown-menu ul a:hover {
+  background-color: #f0f0f0;
+}
+
+.admin-avatar:hover + .dropdown-menu {
+  display: block;
+}
+
+
+

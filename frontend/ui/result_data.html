@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Results</title>
+    <link rel="stylesheet" href="{{ url_for('serve_css', filename='result_data.css') }}">
+    <link rel="stylesheet" href="{{ url_for('serve_css', filename='index.css') }}">
+    <link rel="stylesheet" href="{{ url_for('serve_css', filename='login.css') }}">
+    <link rel="stylesheet" href="{{ url_for('serve_css', filename='reset.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="title-logo">
+                <img class="logo" src="{{ url_for('serve_backend_uploads', filename='logohdbank1-fotor-bg-remover-20241130203157.png') }}" alt="HDBank Logo">
+                <div class="search-bar">
+                    <input type="text" placeholder="Tìm kiếm..." />
+                </div>
+            </div>
+            <ul>
+                <li><a href="/"><i class="fas fa-home"></i> Trang chủ</a></li>
+                <li><a href="/result-data" id=""><i class="fas fa-history"></i> Lịch sử dự đoán</a></li>
+                <li><a href="/prediction-counts" id=""><i class="fas fa-chart-bar"></i> Thống kê số liệu</a></li>
+                <li><a href="javascript:void(0);" id=""><i class="fas fa-database"></i> Dữ liệu khoản vay</a></li>
+                <li><a href="javascript:void(0);" id=""><i class="fas fa-info-circle"></i> Thông tin quản trị viên</a></li>
+                <li><a href="javascript:void(0);" id=""><i class="fas fa-cog"></i> Cài đặt</a></li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            
+            <div class="main-content-h2">
+                <img class="logo" src="{{ url_for('serve_backend_uploads', filename='Logo-HDBank.png') }}" alt="HDBank Logo">
+                <h2>HỆ THỐNG DỰ ĐOÁN KHẢ NĂNG HOÀN TRẢ KHOẢN VAY - HDBANK</h2>
+            </div>
+            <div class="image-slider">
+                <div class="slides">
+                    <div class="slide"><img src="{{ url_for('serve_backend_uploads', filename='slider5.jpg') }}" alt="Slide 1"></div>
+                    <div class="slide"><img src="{{ url_for('serve_backend_uploads', filename='slider6.jpg') }}" alt="Slide 2"></div>
+                    <div class="slide"><img src="{{ url_for('serve_backend_uploads', filename='slider4.png') }}" alt="Slide 3"></div>
+                </div>
+                <!-- Nút điều hướng -->
+                <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
+                <button class="next" onclick="moveSlide(1)">&#10095;</button>
+            </div>
+            <div class="title-table-result">
+                <h2>THÔNG TIN KẾT QUẢ DỰ ĐOÁN CỦA HỆ THỐNG</h2>
+            </div>
+
+            {% if error %}
+                <div class="message-box error-message">
+                    <p>{{ error }}</p>
+                </div>
+            {% else %}
+                <div class="table-responsive">
+                    <table class="result-table">
+                        <thead>
+                            <tr>
+                                <th>Tên người dùng</th>
+                                <th>Địa chỉ email</th>
+                                <th>Số điện thoại</th>
+                                <th>Ngày đăng ký</th>
+                                <th>Tình trạng tài khoản</th>
+                                <th>Điểm rủi ro</th>
+                                <th>Dự đoán</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for row in predictions %}
+                            <tr>
+                                <td>{{ row.UserName }}</td>
+                                <td>{{ row.Email }}</td>
+                                <td>{{ row.PhoneNumber }}</td>
+                                <td>{{ row.RegistrationDate }}</td>
+                                <td>{{ row.AccountStatus }}</td>
+                                <td>{{ row.RiskScore }}</td>
+                                <td>{{ row.Prediction }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% endif %}
+            <div class="button-actions">
+                <button class="upload-button" onclick="openAwsModal()">Upload to AWS</button>
+                <button class="export-button" onclick="exportToExcel()">Export to Excel</button>
+            </div>
+            
+            <!-- Modal cho thông báo AWS -->
+            <div id="awsModal" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeAwsModal()">&times;</span>
+                    <p id="awsMessage">Đang tải dữ liệu lên AWS...</p>
+                    <div class="img-aws">
+                        <img src="/backend/uploads/amazon.png" alt="">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        
+
+       <!-- Admin Section -->
+        <div class="admin-section">
+            <form class="form-button-logout" action="{{ url_for('logout') }}" method="POST">
+                <button type="submit" class="logout-button share-button"><i class="fas fa-sign-out-alt"></i> Đăng xuất</button>
+            </form>
+            <img src="/backend/uploads/logo-hdbank.jpg" alt="Admin Avatar" class="admin-avatar">
+        </div>
+    </div>
+    <script>
+        let currentSlide = 0;
+    
+        function moveSlide(direction) {
+            const slides = document.querySelector('.slides');
+            const totalSlides = slides.children.length;
+    
+            // Cập nhật vị trí slide hiện tại
+            currentSlide = (currentSlide + direction + totalSlides) % totalSlides;
+    
+            // Di chuyển slider
+            slides.style.transform = `translateX(-${currentSlide * 100}%)`;
+        }
+    
+        // Tự động chuyển slide
+        setInterval(() => {
+            moveSlide(1); // Chuyển đến slide tiếp theo
+        }, 5000); // 5 giây
+        
+
+
+        function openAwsModal() {
+    document.getElementById("awsModal").style.display = "block";
+
+    // Giả lập tải lên AWS sau 2 giây
+    setTimeout(() => {
+        document.getElementById("awsMessage").innerText = "Dữ liệu đã được tải lên file output_Loan.csv.";
+    }, 2000);
+}
+
+function closeAwsModal() {
+    document.getElementById("awsModal").style.display = "none";
+}
+
+function exportToExcel() {
+    window.location.href = '/export-to-excel';
+}
+
+
+
+    </script>
+</body>
+</html>

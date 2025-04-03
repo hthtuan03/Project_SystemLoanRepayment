@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thống Kê Số Liệu - HDBank</title>
+    <link rel="stylesheet" href="{{ url_for('serve_css', filename='prediction_counts.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Chart.js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="title-logo">
+                <img class="logo" src="{{ url_for('serve_backend_uploads', filename='logohdbank1-fotor-bg-remover-20241130203157.png') }}" alt="HDBank Logo">
+                <div class="search-bar">
+                    <input type="text" placeholder="Tìm kiếm..." />
+                </div>
+            </div>
+            <ul>
+                <li><a href="/"><i class="fas fa-home"></i> Trang chủ</a></li>
+                <li><a href="/result-data" id=""><i class="fas fa-history"></i> Lịch sử dự đoán</a></li>
+                <li><a href="/prediction-counts" id=""><i class="fas fa-chart-bar"></i> Thống kê số liệu</a></li>
+                <li><a href="javascript:void(0);" id=""><i class="fas fa-database"></i> Dữ liệu khoản vay</a></li>
+                <li><a href="javascript:void(0);" id=""><i class="fas fa-info-circle"></i> Thông tin quản trị viên</a></li>
+                <li><a href="javascript:void(0);" id=""><i class="fas fa-cog"></i> Cài đặt</a></li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="main-content-h2">
+                <img class="logo" src="{{ url_for('serve_backend_uploads', filename='Logo-HDBank.png') }}" alt="HDBank Logo">
+                <h2><i class="fas fa-chart-pie"></i> THỐNG KÊ SỐ LIỆU DỰ ĐOÁN</h2>
+            </div>
+            <div class="image-slider">
+                <div class="slides">
+                    <div class="slide"><img src="{{ url_for('serve_backend_uploads', filename='slider7.jpg') }}" alt="Slide 1"></div>
+                    <div class="slide"><img src="{{ url_for('serve_backend_uploads', filename='slider8.png') }}" alt="Slide 2"></div>
+                    <div class="slide"><img src="{{ url_for('serve_backend_uploads', filename='slider9.jpg') }}" alt="Slide 3"></div>
+                </div>
+                <!-- Nút điều hướng -->
+                <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
+                <button class="next" onclick="moveSlide(1)">&#10095;</button>
+            </div>
+
+            <!-- Statistics Section -->
+            <div class="statistics-section">
+                <h3 class="title-form-group">Số liệu thống kê</h3>
+
+                <!-- Form chọn ngày -->
+                <form class="form-load-filter"id="filterForm" method="GET" action="/prediction-counts">
+                    <label for="selectedDate">Chọn ngày:</label>
+                    <input type="date" id="selectedDate" name="selected_date" value="{{ selected_date }}" required>
+                    <button type="submit" class="submit-button">Lọc</button>
+                </form>
+
+                <!-- Cards hiển thị số liệu -->
+                <div class="card-container">
+                    <div class="card">
+                        <h4 class="card-title">Có khả năng thanh toán</h4>
+                        <p class="card-value">{{ success_count }}</p>
+                    </div>
+                    <div class="card">
+                        <h4 class="card-title">Không có khả năng thanh toán</h4>
+                        <p class="card-value">{{ failure_count }}</p>
+                    </div>
+                </div>
+
+
+                <!-- Biểu đồ -->
+                <div class="chart-section">
+                    <h3 class="title-form-group">Biểu đồ thống kê</h3>
+                    <canvas id="predictionChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin Section -->
+        <!-- Admin Section -->
+        <div class="admin-section">
+            <form class="form-button-logout" action="{{ url_for('logout') }}" method="POST">
+                <button type="submit" class="logout-button share-button"><i class="fas fa-sign-out-alt"></i> Đăng xuất</button>
+            </form>
+            <img src="/backend/uploads/logo-hdbank.jpg" alt="Admin Avatar" class="admin-avatar">
+        </div>
+    </div>
+
+    <!-- Script -->
+    <script>
+        // Lấy dữ liệu từ Flask thông qua các biến {{ success_count }} và {{ failure_count }}
+        const successCount = parseInt("{{ success_count }}");
+        const failureCount = parseInt("{{ failure_count }}");
+
+        // Tổng số lượng để tính phần trăm
+        const totalCount = successCount + failureCount;
+
+        // Cấu hình biểu đồ
+        const ctx = document.getElementById('predictionChart').getContext('2d');
+        const predictionChart = new Chart(ctx, {
+            type: 'doughnut', // Dạng biểu đồ: Doughnut (vòng tròn)
+            data: {
+                labels: ['Có khả năng thanh toán', 'Không có khả năng thanh toán'],
+                datasets: [{
+                    label: 'Thống kê dự đoán',
+                    data: [successCount, failureCount], // Dữ liệu
+                    backgroundColor: ['#4CAF50', '#FF5722'], // Màu của từng phần
+                    borderWidth: 1,
+                    hoverOffset: 5
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top', // Hiển thị chú thích ở trên
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function (tooltipItem) {
+                                // Lấy dữ liệu từng phần
+                                const value = tooltipItem.raw;
+                                const percentage = ((value / totalCount) * 100).toFixed(2); // Tính phần trăm
+                                return `${tooltipItem.label}: ${value} (${percentage}%)`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        let currentSlide = 0;
+    
+        function moveSlide(direction) {
+            const slides = document.querySelector('.slides');
+            const totalSlides = slides.children.length;
+
+            // Cập nhật vị trí slide hiện tại
+            currentSlide = (currentSlide + direction + totalSlides) % totalSlides;
+
+            // Di chuyển slider
+            slides.style.transform = `translateX(-${currentSlide * 100}%)`;
+        }
+
+        // Tự động chuyển slide
+        setInterval(() => {
+            moveSlide(1); // Chuyển đến slide tiếp theo
+        }, 5000); // 5 giây
+    </script>
+</body>
+</html>
